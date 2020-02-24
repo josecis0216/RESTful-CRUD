@@ -3,18 +3,18 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true
     },
-    imageUrl: {
-      type: String,
-      required: false
-    },
-    content: {
+    position: {
       type: String,
       required: true
-    },
+    }, 
+    team: {
+      type: String,
+      required: true
+    }, 
     creator: {
       type: Object,
       required: String

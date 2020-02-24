@@ -47,7 +47,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/feed', feedRoutes);
+app.use('/player', feedRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -58,7 +58,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://Jose:RXq2UwgeGRo9ta1Z@cluster0-4hqym.mongodb.net/test?retryWrites=true&w=majority'
+    'mongodb+srv://Jose:RXq2UwgeGRo9ta1Z@cluster0-4hqym.mongodb.net/players?retryWrites=true&w=majority'
   )
   .then(result => {
     app.listen(8080);

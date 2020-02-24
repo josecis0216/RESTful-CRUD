@@ -6,16 +6,12 @@ const { validationResult } = require('express-validator/check');
 const Post = require('../models/post');
 
 exports.getPosts = (req, res, next) => {
-  // const currentPage = req.query.page || 1;
-  // const perPage = 2;
   let totalItems;
   Post.find()
     .countDocuments()
     .then(count => {
       totalItems = count;
       return Post.find()
-        // .skip((currentPage - 1) * perPage)
-        // .limit(perPage);
     })
     .then(posts => {
       res
@@ -35,25 +31,14 @@ exports.getPosts = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
-    error.statusCode = 422;
-    throw error;
-  }
-  if (!req.file) {
-    const error = new Error('No image provided.');
-    error.statusCode = 422;
-    throw error;
-  }
-  const imageUrl = req.file.path;
-  const title = req.body.title;
-  const content = req.body.content;
+  const name = req.body.name;
+  const position = req.body.position;
+  const team = req.body.team
   const post = new Post({
-    title: title,
-    content: content,
-    imageUrl: imageUrl,
-    creator: { name: 'Maximilian' }
+    name: name,
+    position: position,
+    team: team,
+    creator: { name: 'Jose' }
   });
   post
     .save()
@@ -98,17 +83,9 @@ exports.updatePost = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  const title = req.body.title;
-  const content = req.body.content;
-  let imageUrl = req.body.image;
-  if (req.file) {
-    imageUrl = req.file.path;
-  }
-  if (!imageUrl) {
-    const error = new Error('No file picked.');
-    error.statusCode = 422;
-    throw error;
-  }
+  const name = req.body.name;
+  const position = req.body.position;
+  const team = req.body.team;
   Post.findById(postId)
     .then(post => {
       if (!post) {
@@ -116,12 +93,9 @@ exports.updatePost = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      if (imageUrl !== post.imageUrl) {
-        clearImage(post.imageUrl);
-      }
-      post.title = title;
-      post.imageUrl = imageUrl;
-      post.content = content;
+      post.name = name;
+      post.position = position;
+      post.team = team;
       return post.save();
     })
     .then(result => {
@@ -145,7 +119,6 @@ exports.deletePost = (req, res, next) => {
         throw error;
       }
       // Check logged in user
-      clearImage(post.imageUrl);
       return Post.findByIdAndRemove(postId);
     })
     .then(result => {
@@ -160,7 +133,3 @@ exports.deletePost = (req, res, next) => {
     });
 };
 
-const clearImage = filePath => {
-  filePath = path.join(__dirname, '..', filePath);
-  fs.unlink(filePath, err => console.log(err));
-};
