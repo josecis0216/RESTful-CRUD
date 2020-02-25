@@ -55,11 +55,13 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
+
+const PORT = process.env.PORT || 8080
 mongoose
   .connect(
     'mongodb+srv://Jose:RXq2UwgeGRo9ta1Z@cluster0-4hqym.mongodb.net/players?retryWrites=true&w=majority'
   )
   .then(result => {
-    app.listen(8080);
+    app.listen(PORT);
   })
   .catch(err => console.log(err));
