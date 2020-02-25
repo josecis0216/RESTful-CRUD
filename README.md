@@ -19,6 +19,7 @@ in the DB
 [players.js](https://github.com/josecis0216/RESTful-CRUD/blob/master/routes/players.js) contains the endpoint
 the path /player/post/:postId and using *name*, *position*, *team* key field along with value in the body plus also selecting
 form data will create a post in the DB
+https://raw.githubusercontent.com/josecis0216/RESTful-CRUD/master/readmeImages/Screen%20Shot%202020-02-24%20at%207.35.25%20PM.png
 ### At least 1 endpoint allowing user to delete an item via DELETE
 [players.js](https://github.com/josecis0216/RESTful-CRUD/blob/master/routes/players.js) contains the endpoint
 the path /player/post/:postId including the id of the post in Postman will delete the selected player from the DB
