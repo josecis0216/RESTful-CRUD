@@ -9,7 +9,7 @@ https://github.com/josecis0216/RESTful-CRUD/blob/master/models/post.js
 I am using MongoDB Atlas as the data store 
 https://github.com/josecis0216/RESTful-CRUD/blob/master/app.js
 ### At least 3 endpoints to GET data from your server
-I have 2 endpoints in [players.js](https://github.com/josecis0216/RESTful-CRUD/blob/master/routes/players.js)
+I have 3 endpoints in [players.js](https://github.com/josecis0216/RESTful-CRUD/blob/master/routes/players.js)
 ### At least 1 endpoint allowing user to update an item via PUT or PATCH HTTP verbs
 [players.js](https://github.com/josecis0216/RESTful-CRUD/blob/master/routes/players.js) contains the endpoint
 Using POST, the path /player/post/:postId along with the id of the post that will get updated will update post. You must select
@@ -27,7 +27,8 @@ the path /player/post/:postId including the id of the post in Postman will delet
 I have created 25 soccer players that play different positions and for different teams
 [Get All Players](https://shrouded-depths-60268.herokuapp.com/player/posts)
 ### Your app will be deployed to production using some service like Heroku, Digital Ocean, etc.
-https://shrouded-depths-60268.herokuapp.com/
+https://shrouded-depths-60268.herokuapp.com/, I currently do not have a '/' route
 ### All of your source code will be properly uploaded to GitHub
 [GitHub Repo](https://github.com/josecis0216/RESTful-CRUD)
 ### Your ReadMe file will accurately describe the server install process (if any) and how to use the APIs
+installing locally, you can clone the code and run `npm install` it'll run on localhost:8080
