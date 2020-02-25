@@ -77,12 +77,6 @@ exports.getPost = (req, res, next) => {
 
 exports.updatePost = (req, res, next) => {
   const postId = req.params.postId;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
-    error.statusCode = 422;
-    throw error;
-  }
   const name = req.body.name;
   const position = req.body.position;
   const team = req.body.team;
