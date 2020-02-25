@@ -112,7 +112,6 @@ exports.deletePost = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      // Check logged in user
       return Post.findByIdAndRemove(postId);
     })
     .then(result => {
