@@ -4,6 +4,55 @@ const path = require('path');
 const { validationResult } = require('express-validator/check');
 
 const Post = require('../models/post');
+const Team = require('../models/team')
+
+exports.getFavTeam = (req, res, next) => {
+  let totalItems;
+  Team.find()
+    .countDocuments()
+    .then(count => {
+      totalItems = count;
+      return Team.find()
+    })
+    .then(posts => {
+      res
+        .status(200)
+        .json({
+          message: 'Fetched teams successfully.',
+          posts: posts,
+          totalItems: totalItems
+        });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+exports.createTeam = (req, res, next) => {
+  const name = req.body.name;
+  const trophies = req.body.trophies;
+  const post = new Team({
+    name: name,
+    trophies: trophies
+  });
+  post
+    .save()
+    .then(result => {
+      res.status(201).json({
+        message: 'Team created successfully!',
+        post: result
+      });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
 
 exports.getPosts = (req, res, next) => {
   let totalItems;

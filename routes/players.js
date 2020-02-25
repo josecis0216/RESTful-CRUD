@@ -5,6 +5,11 @@ const feedController = require('../controllers/players');
 
 const router = express.Router();
 
+// GET /player/favTeam
+router.get('/favTeam', feedController.getFavTeam);
+
+router.post('/postFavTeam', feedController.createTeam);
+
 // GET /player/posts
 router.get('/posts', feedController.getPosts);
 
