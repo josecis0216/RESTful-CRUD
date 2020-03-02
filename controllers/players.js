@@ -83,10 +83,12 @@ exports.createPost = (req, res, next) => {
   const name = req.body.name;
   const position = req.body.position;
   const team = req.body.team
+  const jersey = req.body.team
   const post = new Post({
     name: name,
     position: position,
     team: team,
+    jersey: jersey,
     creator: { name: 'Jose' }
   });
   post
@@ -129,6 +131,7 @@ exports.updatePost = (req, res, next) => {
   const name = req.body.name;
   const position = req.body.position;
   const team = req.body.team;
+  const jersey = req.body.jersey;
   Post.findById(postId)
     .then(post => {
       if (!post) {
@@ -139,6 +142,7 @@ exports.updatePost = (req, res, next) => {
       post.name = name;
       post.position = position;
       post.team = team;
+      post.jersey = jersey;
       return post.save();
     })
     .then(result => {

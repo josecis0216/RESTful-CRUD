@@ -14,6 +14,9 @@ const postSchema = new Schema(
     team: {
       type: String,
       required: true
+    },
+    jersey: {
+      type: String,
     }, 
     creator: {
       type: Object,
