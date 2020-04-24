@@ -54,6 +54,33 @@ exports.createTeam = (req, res, next) => {
     });
 };
 
+
+exports.getTeams = (req, res, next) => {
+  let totalItems;
+  Team.find()
+    .countDocuments()
+    .then(count => {
+      totalItems = count;
+      return Team.find()
+    })
+    .then(teams => {
+      res
+        .status(200)
+        .json({
+          message: 'Fetched posts successfully.',
+          teams: teams,
+          totalItems: totalItems
+        });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+
 exports.getPosts = (req, res, next) => {
   let totalItems;
   Post.find()

@@ -10,6 +10,9 @@ router.get('/favTeam', feedController.getFavTeam);
 
 router.post('/postFavTeam', feedController.createTeam);
 
+// GET /player/teams
+router.get('/teams', feedController.getTeams);
+
 // GET /player/posts
 router.get('/posts', feedController.getPosts);
 

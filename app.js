@@ -56,12 +56,13 @@ app.use((error, req, res, next) => {
 });
 
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8000
 mongoose
   .connect(
     'mongodb+srv://Jose:RXq2UwgeGRo9ta1Z@cluster0-4hqym.mongodb.net/players?retryWrites=true&w=majority'
   )
   .then(result => {
     app.listen(PORT);
+    console.log("app running at" , PORT )
   })
   .catch(err => console.log(err));
