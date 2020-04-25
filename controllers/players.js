@@ -7,21 +7,15 @@ const Post = require('../models/post');
 const Team = require('../models/team')
 
 exports.getFavTeam = (req, res, next) => {
-  let totalItems;
-  Team.find()
-    .countDocuments()
-    .then(count => {
-      totalItems = count;
-      return Team.find()
-    })
-    .then(posts => {
-      res
-        .status(200)
-        .json({
-          message: 'Fetched teams successfully.',
-          posts: posts,
-          totalItems: totalItems
-        });
+  const teamId = req.params.teamId;
+  Team.findById(teamId)
+    .then(team => {
+      if (!team) {
+        const error = new Error('Could not find team.');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({ message: 'Team fetched.', team: team });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -30,30 +24,6 @@ exports.getFavTeam = (req, res, next) => {
       next(err);
     });
 };
-
-exports.createTeam = (req, res, next) => {
-  const name = req.body.name;
-  const trophies = req.body.trophies;
-  const post = new Team({
-    name: name,
-    trophies: trophies
-  });
-  post
-    .save()
-    .then(result => {
-      res.status(201).json({
-        message: 'Team created successfully!',
-        post: result
-      });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
-    });
-};
-
 
 exports.getTeams = (req, res, next) => {
   let totalItems;
@@ -71,6 +41,79 @@ exports.getTeams = (req, res, next) => {
           teams: teams,
           totalItems: totalItems
         });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+exports.updateTeam = (req,res, next) => {
+  const teamId = req.params.teamId;
+  const trophies = req.body.trophies;
+  Team.findById(teamId)
+    .then(team => {
+      if (!team) {
+        const error = new Error('Could not find post.');
+        error.statusCode = 404;
+        throw error;
+      }
+      team.trophies = trophies;
+      return team.save();
+    })
+    .then(result => {
+      res.status(200).json({ message: 'Team updated!', team: result });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+exports.createTeam = (req, res, next) => {
+  const name = req.body.name;
+  const trophies = req.body.trophies;
+  const image = req.body.imageUrl;
+  const team = new Team({
+    name: name,
+    trophies: trophies,
+    image: image
+  });
+  team
+    .save()
+    .then(result => {
+      res.status(201).json({
+        message: 'Team created successfully!',
+        team: result
+      });
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+
+exports.deleteTeam = (req, res, next) => {
+  const teamId = req.params.teamId;
+  Post.findById(teamId)
+    .then(team => {
+      if (!team) {
+        const error = new Error('Could not find team.');
+        error.statusCode = 404;
+        throw error;
+      }
+      return Team.findByIdAndRemove(teamId);
+    })
+    .then(result => {
+      console.log(result);
+      res.status(200).json({ message: 'Deleted team.' });
     })
     .catch(err => {
       if (!err.statusCode) {

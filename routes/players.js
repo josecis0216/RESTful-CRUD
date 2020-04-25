@@ -5,8 +5,8 @@ const feedController = require('../controllers/players');
 
 const router = express.Router();
 
-// GET /player/favTeam
-router.get('/favTeam', feedController.getFavTeam);
+// GET /player/favTeam/id
+router.get('/favTeam/:teamId', feedController.getFavTeam);
 
 router.post('/postFavTeam', feedController.createTeam);
 
@@ -24,6 +24,12 @@ router.get('/post/:postId', feedController.getPost);
 
 // UPDATE /player/post/id
 router.post('/post/:postId', feedController.updatePost);
+
+// UPDATE /player/team/id
+router.post('/team/:teamId', feedController.updateTeam);
+
+// DELETE /player/post/id
+router.delete('/team/:teamId', feedController.deleteTeam);
 
 // DELETE /player/post/id
 router.delete('/post/:postId', feedController.deletePost);

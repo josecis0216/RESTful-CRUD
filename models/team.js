@@ -10,6 +10,10 @@ const teamSchema = new Schema(
     trophies: {
         type: String,
         required: false
+    },
+    imageUrl: {
+      type: String,
+      required: true
     }
   } 
 );
