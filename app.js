@@ -30,6 +30,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+app.use(bodyParser.urlencoded({ extend: true })); 
 app.use(bodyParser.json()); // application/json
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')

@@ -52,19 +52,23 @@ exports.getTeams = (req, res, next) => {
 
 exports.updateTeam = (req,res, next) => {
   const teamId = req.params.teamId;
+  const name = req.body.name
   const trophies = req.body.trophies;
+  const image = req.body.image;
   Team.findById(teamId)
-    .then(team => {
-      if (!team) {
-        const error = new Error('Could not find post.');
+    .then(response => {
+      if (!response) {
+        const error = new Error('Could not find team.');
         error.statusCode = 404;
         throw error;
       }
-      team.trophies = trophies;
-      return team.save();
+      response.name = name
+      response.trophies = trophies;
+      response.image = image;
+      return response.save();
     })
     .then(result => {
-      res.status(200).json({ message: 'Team updated!', team: result });
+      res.status(200).json({ message: 'Team updated!', response: result });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -77,7 +81,7 @@ exports.updateTeam = (req,res, next) => {
 exports.createTeam = (req, res, next) => {
   const name = req.body.name;
   const trophies = req.body.trophies;
-  const image = req.body.imageUrl;
+  const image = req.body.image;
   const team = new Team({
     name: name,
     trophies: trophies,
@@ -102,7 +106,7 @@ exports.createTeam = (req, res, next) => {
 
 exports.deleteTeam = (req, res, next) => {
   const teamId = req.params.teamId;
-  Post.findById(teamId)
+  Team.findById(teamId)
     .then(team => {
       if (!team) {
         const error = new Error('Could not find team.');
