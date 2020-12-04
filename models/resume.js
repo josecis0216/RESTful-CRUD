@@ -16,11 +16,11 @@ const resumeSchema = new Schema(
       required: true
     }, 
     startDate: {
-      type: Date,
+      type: string,
       required: true
     },
     endDate: {
-      type: Date,
+      type: string,
     }, 
     creator: {
       type: Object,
